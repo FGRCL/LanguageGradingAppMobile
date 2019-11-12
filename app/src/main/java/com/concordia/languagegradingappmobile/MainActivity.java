@@ -14,8 +14,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
     Button sendButton;
@@ -35,15 +38,15 @@ public class MainActivity extends AppCompatActivity {
         final TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText("Hiya");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com";
+        String url ="https://jsonplaceholder.typicode.com/todos/1";
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                    new Response.Listener<String>() {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
                         @Override
-                        public void onResponse(String response) {
+                        public void onResponse(JSONObject response) {
                             // Display the first 500 characters of the response string.
-                            textView.setText("Response is: "+ response.substring(0,500));
+                            textView.setText(response.toString());
                         }
                     }, new Response.ErrorListener() {
                 @Override
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     textView.setText("That didn't work!");
                 }
             });
-            queue.add(stringRequest);
+            queue.add(jsonObjectRequest);
         } else {
             textView.setText("You don't have permission");
         }
