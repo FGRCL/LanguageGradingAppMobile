@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void volleyDemo(){
         final TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText("Hiya");
+        textView.setText("Loading");
         RequestQueue queue = Volley.newRequestQueue(this);
         String url ="https://jsonplaceholder.typicode.com/todos/1";
 
